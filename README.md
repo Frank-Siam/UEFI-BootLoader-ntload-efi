@@ -1,4 +1,4 @@
-# UEFI-BootLoader
+# UEFI-BootLoader: winload.efi
 
 note: i just started. there is nothing usefull here yet. it is for testing github..
 
