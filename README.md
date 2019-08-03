@@ -8,6 +8,7 @@ a boot loader for a windows compatible OS
 start with a boot loader for pc x86 (32bit) and x64(64bit)
 
 the boot loader create a boot parameter block struct ..initialize with data (boot parameters)
+load the system registry file into memory as a registry database.
 load modules into memory: the kernel, hal, vidmem, boot drivers
 jump to kernel entry point.
 
