@@ -17,4 +17,4 @@ from a boot manager.
 
 our boot loader is module in native PE format. it can be 32bit or 64bit. 
 
-if any error occur while loading the modules or when starting the kernel, we reboot .. warm start.
+if any error occur while loading the system registry or the modules or when starting the kernel, we reboot .. warm start.
