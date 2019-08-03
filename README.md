@@ -1,4 +1,8 @@
 # UEFI-BootLoader
+
+note: i just started. there is nothing usefull here yet. it is for testing github..
+
+
 a boot loader for a windows compatible OS
 
 start with a boot loader for pc x86 (32bit) and x64(64bit)
