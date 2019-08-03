@@ -12,7 +12,7 @@ load the system registry file into memory as a registry database.
 load modules into memory: the kernel, hal, vidmem, boot drivers
 jump to kernel entry point.
 
-UEFI will be a 32bit boot environment and maybe  our boot loader will be called directly with saved boot arguments (strings) or
+UEFI will be a 32 or 64 bit boot environment and maybe  our boot loader will be called directly with saved boot arguments (strings) or
 from a boot manager.
 
 our boot loader is module in native PE format. it can be 32bit or 64bit. 
