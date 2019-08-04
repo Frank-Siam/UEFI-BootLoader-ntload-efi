@@ -9,9 +9,9 @@ start with a boot loader for pc x86 (32bit) and x64(64bit)
 
 the boot loader create a boot parameter block struct ..initialize with data (boot parameters)
 load the system registry file into memory as system-HIVE.
-load kernel modules into memory: the kernel, hal, vidmem
+load kernel modules into memory: ntoskrnl.exe hal.dll vidmem.dll kdcom.dll ..
 load boot drivers
-jump to kernel entry point.
+call kernel entry point.
 
 UEFI will be a 32 or 64 bit boot environment and maybe  our boot loader will be called directly with saved boot arguments (strings) or
 from a boot manager.
