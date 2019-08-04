@@ -9,7 +9,7 @@ start with a boot loader for pc x86 (32bit) and x64(64bit)
 
 the boot loader create a boot parameter block struct ..initialize with data (boot parameters)
 load the system registry file into memory as system-HIVE.
-load kernel modules into memory: ntoskrnl.exe hal.dll vidmem.dll kdcom.dll ..
+load kernel modules into memory: ntoskrnl.exe hal.dll bootvid.dll kdcom.dll ..
 load boot drivers
 call kernel entry point.
 
