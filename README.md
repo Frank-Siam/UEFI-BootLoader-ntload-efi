@@ -14,7 +14,7 @@ from a boot manager. or the file is renamed to bootx.efi (32bit) or bootx64 (64b
 /efi/boot on the boot disk by a setup programm. then the commandline for winload.efi will be empty.
 
 this boot loader is a module in native PE format subsystem efi. 
-winload.efi can be 32bit or 64bit, select in build.
+winload.efi can be ARM32/64 or x86/x64 select in build.
 
 winload.efi need to know the path to the system root device and a root directory path.
 we provide a boot.ini in the directory where winload.efi is, /efi/boot in the EFI system partition of the boot disk.
@@ -48,23 +48,24 @@ copy this winload.efi into /efi/boot of the efi system partition.
 
 
 winload.efi do this:
-1. create a loader parameter block struct (LPB). later we give this data to the kernel.
+1. create a loader parameter block struct LOADER_PARAMETER_BLOCK (LPB). 
+later we give this data to the kernel.
 
-2. initialize boot parameter block:
-copy given boot parameters from winload.efi-commandline or boot.ini into boot parameter block. 
-save root device path and root directory path into boot parameter block. 
+2. initialize loader parameter block:
+copy given boot parameters from winload.efi-commandline or boot.ini into loader parameter block. 
+save root device path and root directory path into loader parameter block. 
 setup UEFI runtime service table so the kernel can call UEFI services for reboot, shutdown etc.
-copy hardware info from UEFI tables into boot parameter block.
-copy memory map info from UEFI into boot parameter block.
+copy hardware info from UEFI tables into loader parameter block.
+copy memory map info from UEFI into loader parameter block.
 
-load the system registry file into memory as system-HIVE. save the handle in boot parameter block. 
+load the system registry file into memory as system-HIVE. save the handle in loader parameter block. 
 from the boot config in the system hive we can get more details about the boot process:
 which kernel modules, which boot drives ...
 load kernel modules into memory: ntoskrnl.exe hal.dll bootvid.dll kdcom.dll ..
 load boot drivers into memory:
 
 
-3. call kernel entry point with the boot parameter block.
+3. call kernel entry point with the loader parameter block.
 
 if any error occur while loading the system registry or the modules or when starting the kernel, we reboot .. warm start.
 if the operating system (windows) is loaded normal, we never return from the kernel. the operating system will call
