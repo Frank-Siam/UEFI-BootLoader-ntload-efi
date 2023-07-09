@@ -11,21 +11,22 @@ A normal pc has a 64bit UEFI and need this bootloader as x64 variant.
 
 this boot loader will be called directly with saved boot arguments (strings) or
 from a boot manager. or the file is renamed to bootx.efi (32bit) or bootx64 (64bit) and copy into
-/efi/boot on the boot disk by a setup programm. then the commandline for winload.efi will be empty.
+/efi/boot on the boot disk by a setup programm. then the commandline for ntload.efi will be empty.
 
 this boot loader is a module in native PE format subsystem efi. 
-winload.efi can be ARM32/64 or x86/x64 select in build.
+ntload.efi can be ARM32/64 or x86/x64 select in build.
 
-winload.efi need to know the path to the system root device and a root directory path.
-we provide a boot.ini in the directory where winload.efi is, /efi/boot in the EFI system partition of the boot disk.
-if no boot.ini is found, winload.efi will search all volumes of the boot disk for a system-hive.
-if nothing is found, winload.efi return to the UEFI boot environment.
+ntload.efi need to know the path to the system root device and a root directory path.
+we provide a boot.ini in the directory where ntload.efi is, /efi/boot in the EFI system partition of the boot disk.
+if no boot.ini is found, ntload.efi will search all volumes of the boot disk for a system-hive.
+if there is a system-hive on the boot volume, we use that.
+if nothing is found, ntload.efi return to the UEFI boot environment.
 can also look into other disks and ask if this shall be default boot and store in UEFI for next boot.
 
 we give a Root device path to the volume. the volume becomes the root volume.
 we give a Root path: c:\Windows or c:\Reactos or c:\NTOS.
 
-the system registry hive file has the name "system" and is normal "C:\Windows\System32\config\system"
+the system registry hive file has the name "system" or "system.hiv" and is normal "C:\Windows\System32\config\system"
 we can specify a other file path for the system hive file name with a cmdline parameter.
 from the given info we will build filenames for the system registry file and all modules we load into memory.
 
@@ -44,15 +45,14 @@ you initialize the disk in GPT mode if not yet.
 create a EFI-system partition if not yet there. maybe need use diskpart for this.
 create a volume for the operating system if not yet there. name it with your system name.
 copy the files of the operating system into this volume. 
-copy this winload.efi into /efi/boot of the efi system partition.
+copy this ntload.efi into /efi/boot of the efi system partition.
 
-
-winload.efi do this:
+ntload.efi do this:
 1. create a loader parameter block struct LOADER_PARAMETER_BLOCK (LPB). 
 later we give this data to the kernel.
 
 2. initialize loader parameter block:
-copy given boot parameters from winload.efi-commandline or boot.ini into loader parameter block. 
+copy given boot parameters from ntload.efi-commandline or boot.ini into loader parameter block. 
 save root device path and root directory path into loader parameter block. 
 setup UEFI runtime service table so the kernel can call UEFI services for reboot, shutdown etc.
 copy hardware info from UEFI tables into loader parameter block.
@@ -63,7 +63,6 @@ from the boot config in the system hive we can get more details about the boot p
 which kernel modules, which boot drives ...
 load kernel modules into memory: ntoskrnl.exe hal.dll bootvid.dll kdcom.dll ..
 load boot drivers into memory:
-
 
 3. call kernel entry point with the loader parameter block.
 
